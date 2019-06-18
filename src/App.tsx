@@ -8,9 +8,8 @@ import createTheme from "spectacle/lib/themes/default"
 import ClientServerHTTP from './client_server_http.png'
 import OSIModel from './labeledosimodel.png'
 import HTTPBrowser from "./http-browser.png"
+import PythonExtension from "./python-extension.png"
 
-import html1 from "./html1.png"
-import html2 from "./html2.png"
 import bay from "./bay.png"
 
 require('prismjs/components/prism-python')
@@ -48,13 +47,16 @@ const markdownSlides = [
     {
         text: `
 # Web Dev Overview
+
 ---
+
 At a high level, Web Dev breaks down into two categories, **Front-End** and **Back-End** web development. This talk, as you may have inferred from the name is about the **Back-End**. If you want to learn more about the **Front-End**, come to ***Front-End Web Dev*** tomorrow.
 `
     },
     {
         text: `
 # What is HTTP?
+
 ---
 
 **HTTP** stands for "HyperText Transfer Protocol"
@@ -65,6 +67,7 @@ At a high level, Web Dev breaks down into two categories, **Front-End** and **Ba
     {
         text: `
 # See the HTTP Requests/Responses from Your Browser
+
 ---
 
 ![HTTP Request/Responses from your browser](${HTTPBrowser})
@@ -72,7 +75,8 @@ At a high level, Web Dev breaks down into two categories, **Front-End** and **Ba
     },
     {
         text: `
-# What is HTTP?
+# What is a HTTP Request?
+
 ---
 
 1. [HTTP Request Standards](https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html)
@@ -87,7 +91,8 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
     },
     {
         text: `
-# A Raw HTTP Request
+# What is a HTTP Response?
+
 ---
 
 1. [HTTP Response Standards](https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html)
@@ -102,180 +107,49 @@ Content-Type: text/html
 <html><body><h1>It works!</h1></body></html>
 ~~~
 `
-    },
-    {
+    }, {
         text: `
-# A Raw HTTP Response
+# Make our own Server!
+
 ---
 
-1. [HTML Basics](https://www.w3schools.com/html/html_basic.asp)
+1. Launch VS Code
 
-~~~html
-<html>
-    <head>
-        <title>Neat</title>
-    <head/>
-    <body>
-        <div>
-            <div>
-                1
-            </div>
-            <div>
-                2
-            </div>
-            <div>
-                3
-            </div>
-        </div>
-    </body>
-</html>
-~~~
+2. Install the \`python\` extension (Press \`CTRL + SHIFT + X\`, then search for Python)
 
-![html1](${html1})
+![Python Extension](${PythonExtension})
 `
-    },
-    {
+    }, {
         text: `
-# Styling the HTML
+# Server Boilerplate
+
 ---
 
-~~~html
-<html>
-    <body style="background-color: #004165">
-        <div style="background-color: grey; margin: 1%; overflow: auto">
-            <div style="background-color: white; margin: 1%; overflow: auto">
-                1
-            </div>
-            <div style="background-color: white; margin: 1%; overflow: auto">
-                2
-            </div>
-            <div style="background-color: white; margin: 1%; overflow: auto">
-                3
-            </div>
-        </div>
-    </body>
-</html>
 ~~~
+import flask
 
-![html2](${html2})
-`
-    },
-    {
-        text: `
-# Styling the HTML
----
+app = flask.Flask(__name__)
 
-1. [CSS Selectors](https://www.w3schools.com/cssref/css_selectors.asp)
+@app.route("/")
+def hello_world():
+    return "Hello, World!"
 
-~~~html
-<html>
-    <head>
-        <style>
-            body {
-                background-color: #004165;
-            }
-            div#main {
-                background-color: grey;
-                margin: 1%;
-                overflow: auto;
-            }
-            div.numbers {
-                background-color: white;
-                margin: 1%;
-                overflow: auto;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="main">
-            <div class="numbers"> 1 </div>
-            <div class="numbers"> 2 </div>
-            <div class="numbers"> 3 </div>
-        </div>
-    </body>
-</html>
-~~~
-`
-    },
-    {
-        text: `
-# Adding HTML Programmatically
----
-
-1. [Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)
-
-~~~html
-<html>
-    <body style="background-color: #004165">
-        <div id="main" style="background-color: grey; margin: 1%; overflow: auto"></div>
-        <script>
-            var mainDiv = document.getElementById("main");
-
-            for (var i = 1; i <= 3; i++) {
-                mainDiv.innerHTML += '<div  style="background-color: white; margin: 1%; overflow: auto" >' + i + "</div>";
-            }
-        </script>
-    </body>
-</html>
-~~~
-
-![html2](${html2})
-`
-    },
-    {
-        text: `
-# Handling Element Click Events
----
-
-~~~html
-<html>
-    <body style="background-color: #004165">
-        <div id="main" style="background-color: grey; margin: 1%; overflow: auto"></div>
-        <script>
-            var mainDiv = document.getElementById("main");
-
-            var i = 1;
-
-            for (i = 1; i <= 3; i++) {
-                mainDiv.innerHTML += '<div  style="background-color: white; margin: 1%; overflow: auto" >' + i + "</div>";
-            }
-
-            mainDiv.addEventListener("click", function() {
-                mainDiv.innerHTML += '<div  style="background-color: white; margin: 1%; overflow: auto" >' + i + "</div>";
-
-                i++;
-            })
-        </script>
-    </body>
-</html>
+if __name__ == "__main__":
+    app.run(port=7777)
 ~~~
 `
     }, {
         text: `
-# Handling Global Click Events
+# Make Requests to our Server!
+
 ---
 
-~~~html
-<html>
-    <body style="background-color: #004165">
-        <div id="main" style="background-color: grey; margin: 1%; overflow: auto"></div>
-        <script>
-            var mainDiv = document.getElementById("main");
+~~~
+import requests
 
-            var i = 1;
+response = requests.get("http://localhost:7777")
 
-            for (i = 1; i <= 3; i++) {
-                mainDiv.innerHTML += '<div  style="background-color: white; margin: 1%; overflow: auto" >' + i + "</div>";
-            }
-
-            document.addEventListener("click", function() {
-                mainDiv.innerHTML += '<div  style="background-color: white; margin: 1%; overflow: auto" >' + i + "</div>";
-
-                i++;
-            })
-        </script>
-    </body>
-</html>
+print(response.text)
 ~~~
 `
     }, {
@@ -284,7 +158,7 @@ Content-Type: text/html
 
 ---
 
-1. [Host with Amazon Web Services](https://medium.com/@kyle.galbraith/how-to-host-a-website-on-s3-without-getting-lost-in-the-sea-e2b82aa6cd38)
+1. [Host it on the internet](https://www.reddit.com/r/flask/comments/2321oc/easiest_and_fastest_way_to_host_flask_python/)
 `
     }, {
         text: `
@@ -292,16 +166,15 @@ Content-Type: text/html
 
 ---
 
-1. Creat your own website!
+1. Create your own Web API!
 
-2. Learn about the **Back-End** of websites
+2. Learn about the **Front-End** of websites
 
 ![bay](${bay})
 `
     }, {
         text: `
 # What would you like to see? Questions?
-
 ---
 `
     }
