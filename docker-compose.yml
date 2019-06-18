@@ -1,0 +1,13 @@
+version: "3.5"
+
+services:
+  gen-cyber-back-end-server:
+    build: .
+    expose:
+      - "80"
+    networks:
+      - rjnet
+
+networks:
+  rjnet:
+    name: rjnewsite_default
